@@ -8,9 +8,15 @@
     for an arbitrary list of strings.
 
 """
-__author__ = "???"
+__author__ = "Missi"
+
+#with help from Piero
 
 import sys
+from collections import defaultdict 
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 
 
 def alphabetize(string):
@@ -39,20 +45,21 @@ def find_anagrams(words):
         {'dgo': ['dog'], 'act': ['cat', 'act']}
 
     """
-    anagrams = {
-        alphabetize(word): [
-            w for w in words
-            if alphabetize(w) == alphabetize(word)]
-        for word in words}
-    return anagrams
+    anagrams = defaultdict(list)
 
+    for word in words:
+        anagrams[alphabetize(word)].append(word)
+    return anagrams
 
 if __name__ == "__main__":
     # run find anagrams of first argument
     if len(sys.argv) < 2:
-        print "Please specify a word file!"
+        print ("Please specify a word file!")
         sys.exit(1)
     else:
         with open(sys.argv[1], 'r') as handle:
             words = handle.read().split()
-            print find_anagrams(words)
+            for k, v in find_anagrams(words).items():
+                if len(v) > 1:
+                    print('{}:{}'.format(k,v))
+
