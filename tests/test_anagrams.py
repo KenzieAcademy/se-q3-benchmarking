@@ -1,11 +1,19 @@
 """ Test Suite for anagrams module. """
+import sys
 import unittest
 import importlib
 import timeit
 import json
 import functools
+import subprocess
 
 __author__ = "madarp"
+
+# suppress __pycache__ and .pyc files
+sys.dont_write_bytecode = True
+
+# Kenzie devs: change this to 'soln.anagrams' to test solution
+PKG_NAME = 'anagrams'
 
 
 class TestAnagrams(unittest.TestCase):
@@ -13,17 +21,17 @@ class TestAnagrams(unittest.TestCase):
     Benchmarking test case. We test actual functionality of `find_anagrams`
     with doctests, which is why this test case excludes those unit tests.
     """
-    def setUp(self):
-        module_name = 'anagrams'
-        """import the module(s) under test, in the context of this test fixture"""
-        try:
-            self.ana = importlib.import_module(module_name)
-        except ImportError:
-            self.fail('Unable to import module: ' + module_name)
+
+    @classmethod
+    def setUpClass(cls):
+        """Performs module import and suite setup at test-runtime"""
+        cls.assertGreaterEqual(cls, sys.version_info[0], 3)
+        cls.module = importlib.import_module(PKG_NAME)
+
 
     def run_find_anagrams(self, word_list, benchmark):
         """Helper func to time the find_anagrams() func"""
-        f = functools.partial(self.ana.find_anagrams, word_list)
+        f = functools.partial(self.module.find_anagrams, word_list)
         t = timeit.Timer(f)
         actual_time = round(t.timeit(number=1), 3)
         failure_text = (
@@ -36,7 +44,7 @@ class TestAnagrams(unittest.TestCase):
         """Check the anagram dict result for correctness"""
         with open("words/short.txt") as f:
             short_list = f.read().split()
-        actual_dict = self.ana.find_anagrams(short_list)
+        actual_dict = self.module.find_anagrams(short_list)
         self.assertIsInstance(actual_dict, dict)
         with open('tests/short_list.json') as f:
             expected_dict = json.loads(f.read())
@@ -54,6 +62,19 @@ class TestAnagrams(unittest.TestCase):
         with open("words/long.txt") as f:
             long_list = f.read().split()
         self.run_find_anagrams(long_list, 0.500)
+
+    def test_flake8(self):
+        """Checking for PEP8/flake8 compliance"""
+        result = subprocess.run(['flake8', self.module.__file__])
+        self.assertEqual(result.returncode, 0)
+
+    def test_author_string(self):
+        """Checking for author string"""
+        self.assertIsNotNone(self.module.__author__)
+        self.assertNotEqual(
+            self.module.__author__, "???",
+            "Author string is not completed"
+            )
 
 
 if __name__ == '__main__':
