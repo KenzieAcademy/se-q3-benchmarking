@@ -1,4 +1,4 @@
-<img height="120px" src="https://hackernoon.com/hn-images/1*U8AZbgD9wqF1IgVbOWlocg.png">
+<img height="120px" src="img/ElvisLivesAnagram.png">
 
 # Benchmarking (aka "I don't have time for this")
 
@@ -9,25 +9,22 @@ Unfortunately, a previous teammate not only committed code that made the benchma
 
 Your task is to modify [anagrams.py](anagrams.py) such that the tests pass again. If the problem isn't obvious to you by visually examining the `anagrams.py` module, consider using the profiling techniques that you learned about in the lessons to pin down the problem. Using a debugger may also help you to get a handle on exactly _why_ things are slow.
 
-## Skipped unit test
-If you look at the test case, you'll notice that the `test_long` unit test is currently being skipped. That's because if it were to run with the current implementation of `find_anagrams` it would take several minutes to complete. We suggest that you try and get the `test_short` to pass first, then remove the `@unittest.skip` line and ensure that the tests still pass.
+## A Skipped unit test?
+If you look inside `test_anagrams.py`, you'll notice that the `test_long` unit test is currently being skipped. That's because if it were to run with the current implementation of `find_anagrams` it would take several minutes to complete. We suggest that you try and get the `test_short` to pass first, then comment out the `@unittest.skip` line and ensure that the tests still pass.
 
-## Testing
-You can run the tests from the command line with the unittest framework. From the top level directory of the assignment, use the following command:
+
+## Testing with Unittest
+This assignment has separate unit tests to help you during development. The unit tests are located in the `tests` folder; you should not modify these.  Make sure all unit tests are passing before you submit your solution. You can invoke the unit tests from the command line at the root of your project folder:
 ```console
-% python -m unittest discover
+$ python -m unittest discover tests
 ```
+You can also run and debug these same tests using the `Test Explorer` extension built in to the VSCode editor, by enabling automatic test discovery.  This is a really useful tool and we highly recommend to learn it.
 
-VS Code also has a built-in test discovery feature, but it requires you to enable test discovery in the settings. Read [this article](https://code.visualstudio.com/docs/python/testing#_test-discovery) for more information about how to configure VS Code for automatic test discovery.
+https://code.visualstudio.com/docs/python/testing#_test-discovery
 
-Be sure to select the configuration for `unittest`, and not `nose` or `pytest` because these are third-party libraries that you would have to install. The file discovery pattern to configure is `test_*.py`.
+- Test framework is `unittest`
+- Test folder pattern is `tests`
+- Test name pattern is `test*`
 
-
-## PR (Pull Request) Workflow for this assignment
-1. *Fork* this repository into your own personal GitHub account.
-2. *Clone* your own repo to your local development machine.
-3. Create a separate branch named `dev` and checkout the branch.
-5. Commit your changes, then `git push` the branch back to your own GitHub account.
-5. From your own GitHub repo, create a pull request (PR) *from your `dev` branch back to **your own** master*.
-6. Copy/Paste the URL **link to your PR** as your assignment submission.
-7. Your grader will post code review comments inline within your pull request in your GitHub account. Be sure to respond to any comments and make requested changes. **RESUBMIT** a new link to your PR after making changes. This is the code review iteration cycle.
+## Submitting your work
+To submit your solution for grading, you will need to create a github [Pull Request (PR)](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).  Refer to the `PR Workflow` article in your course content for details.
