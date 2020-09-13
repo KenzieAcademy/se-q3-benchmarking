@@ -1,4 +1,9 @@
-""" Test Suite for anagrams module. """
+"""
+Test Suite for anagrams module. 
+Students should only modify only the `test_long` method.
+"""
+__author__ = "madarp"
+
 import sys
 import unittest
 import importlib
@@ -6,8 +11,6 @@ import timeit
 import json
 import functools
 import subprocess
-
-__author__ = "madarp"
 
 # suppress __pycache__ and .pyc files
 sys.dont_write_bytecode = True
@@ -17,17 +20,12 @@ PKG_NAME = 'anagrams'
 
 
 class TestAnagrams(unittest.TestCase):
-    """
-    Benchmarking test case. We test actual functionality of `find_anagrams`
-    with doctests, which is why this test case excludes those unit tests.
-    """
 
     @classmethod
     def setUpClass(cls):
         """Performs module import and suite setup at test-runtime"""
         cls.assertGreaterEqual(cls, sys.version_info[0], 3)
         cls.module = importlib.import_module(PKG_NAME)
-
 
     def run_find_anagrams(self, word_list, benchmark):
         """Helper func to time the find_anagrams() func"""
@@ -56,6 +54,9 @@ class TestAnagrams(unittest.TestCase):
             short_list = f.read().split()
         self.run_find_anagrams(short_list, 0.030)
 
+    #
+    # Students:  Comment out the line below to enable the long test.
+    #
     @unittest.skip("Remove this line once short test passes")
     def test_long(self):
         """Check find_anagrams() with long word list."""
